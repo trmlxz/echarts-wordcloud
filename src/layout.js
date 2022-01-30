@@ -992,11 +992,13 @@ var WordCloud = function WordCloud(elements, options) {
 
     var extraDataArray = getItemExtraData(item);
 
+    while(1){
+      
     // get info needed to put the text onto the canvas
     var info = getTextInfo(word, weight, rotateDeg, extraDataArray);
 
     // not getting the info means we shouldn't be drawing this one.
-    if (!info) {
+    if (!info || weight < 5) {
       return false;
     }
 
@@ -1089,7 +1091,12 @@ var WordCloud = function WordCloud(elements, options) {
       }
     }
     // we tried all distances but text won't fit, return null
-    return null;
+    // return null;
+    if(weight < 5){
+      return null;
+    }
+    weight -= 1
+    }
   };
 
   /* Send DOM event to all elements. Will stop sending event and return
